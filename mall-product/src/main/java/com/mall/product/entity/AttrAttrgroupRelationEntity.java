@@ -2,39 +2,37 @@ package com.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 属性&属性分组关联
  * 
  * @author zzh
  * @email zzh@gmail.com
- * @date 2020-09-06 17:58:41
+ * @date 2020-11-05 21:24:58
  */
 @Data
 @TableName("pms_attr_attrgroup_relation")
+@ApiModel(value = "pms_attr_attrgroup_relation", description = "属性&属性分组关联")
 public class AttrAttrgroupRelationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+	@ApiModelProperty(value = "id")
 	@TableId
 	private Long id;
-	/**
-	 * 属性id
-	 */
+
+	@ApiModelProperty(value = "属性id")
 	private Long attrId;
-	/**
-	 * 属性分组id
-	 */
+
+	@ApiModelProperty(value = "属性分组id")
 	private Long attrGroupId;
-	/**
-	 * 属性组内排序
-	 */
+
+	@ApiModelProperty(value = "属性组内排序")
 	private Integer attrSort;
+
 
 }

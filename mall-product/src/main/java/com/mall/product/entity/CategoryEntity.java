@@ -3,6 +3,8 @@ package com.mall.product.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,53 +15,43 @@ import java.util.List;
  *
  * @author zzh
  * @email zzh@gmail.com
- * @date 2020-09-06 17:58:41
+ * @date 2020-11-05 21:24:58
  */
 @Data
 @TableName("pms_category")
+@ApiModel(value = "pms_category", description = "商品三级分类")
 public class CategoryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 分类id
-     */
+    @ApiModelProperty(value = "分类id")
     @TableId
     private Long catId;
-    /**
-     * 分类名称
-     */
+
+    @ApiModelProperty(value = "分类名称")
     private String name;
-    /**
-     * 父分类id
-     */
+
+    @ApiModelProperty(value = "父分类id")
     private Long parentCid;
-    /**
-     * 层级
-     */
+
+    @ApiModelProperty(value = "层级")
     private Integer catLevel;
-    /**
-     * 是否显示[0-不显示，1显示]
-     */
+
+    @ApiModelProperty(value = "是否显示[0-不显示，1显示]")
     private Integer showStatus;
-    /**
-     * 排序
-     */
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
-    /**
-     * 图标地址
-     */
+
+    @ApiModelProperty(value = "图标地址")
     private String icon;
-    /**
-     * 计量单位
-     */
+
+    @ApiModelProperty(value = "计量单位")
     private String productUnit;
-    /**
-     * 商品数量
-     */
+
+    @ApiModelProperty(value = "商品数量")
     private Integer productCount;
-    /**
-     * 子菜单
-     */
+
+    @ApiModelProperty(value = "子结构")
     @TableField(exist = false)
     private List<CategoryEntity> children;
 

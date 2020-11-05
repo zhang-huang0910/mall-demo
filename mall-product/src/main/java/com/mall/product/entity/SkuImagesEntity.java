@@ -2,43 +2,40 @@ package com.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * sku图片
  * 
  * @author zzh
  * @email zzh@gmail.com
- * @date 2020-09-06 17:58:41
+ * @date 2020-11-05 21:24:58
  */
 @Data
 @TableName("pms_sku_images")
+@ApiModel(value = "pms_sku_images", description = "sku图片")
 public class SkuImagesEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+	@ApiModelProperty(value = "id")
 	@TableId
 	private Long id;
-	/**
-	 * sku_id
-	 */
+
+	@ApiModelProperty(value = "sku_id")
 	private Long skuId;
-	/**
-	 * 图片地址
-	 */
+
+	@ApiModelProperty(value = "图片地址")
 	private String imgUrl;
-	/**
-	 * 排序
-	 */
+
+	@ApiModelProperty(value = "排序")
 	private Integer imgSort;
-	/**
-	 * 默认图[0 - 不是默认图，1 - 是默认图]
-	 */
+
+	@ApiModelProperty(value = "默认图[0 - 不是默认图，1 - 是默认图]")
 	private Integer defaultImg;
+
 
 }

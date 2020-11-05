@@ -2,47 +2,43 @@ package com.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 属性分组
  * 
  * @author zzh
  * @email zzh@gmail.com
- * @date 2020-09-06 17:58:41
+ * @date 2020-11-05 21:24:58
  */
 @Data
 @TableName("pms_attr_group")
+@ApiModel(value = "pms_attr_group", description = "属性分组")
 public class AttrGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 分组id
-	 */
+	@ApiModelProperty(value = "分组id")
 	@TableId
 	private Long attrGroupId;
-	/**
-	 * 组名
-	 */
+
+	@ApiModelProperty(value = "组名")
 	private String attrGroupName;
-	/**
-	 * 排序
-	 */
+
+	@ApiModelProperty(value = "排序")
 	private Integer sort;
-	/**
-	 * 描述
-	 */
+
+	@ApiModelProperty(value = "描述")
 	private String descript;
-	/**
-	 * 组图标
-	 */
+
+	@ApiModelProperty(value = "组图标")
 	private String icon;
-	/**
-	 * 所属分类id
-	 */
+
+	@ApiModelProperty(value = "所属分类id")
 	private Long catelogId;
+
 
 }
