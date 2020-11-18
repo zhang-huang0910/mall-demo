@@ -10,10 +10,7 @@ import com.mall.product.entity.CategoryEntity;
 import com.mall.product.service.CategoryService;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -42,6 +39,28 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .sorted(Comparator.comparing(CategoryEntity::getSort, Comparator.nullsLast(Integer::compareTo)))
                 .collect(Collectors.toList());
         return treeMenu;
+    }
+
+    @Override
+    public void removeMenuByIds(List<Long> asList) {
+        //TODO
+        baseMapper.deleteBatchIds(asList);
+    }
+
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> catelogPath = getCatelogPath(catelogId, new ArrayList<>());
+        Collections.reverse(catelogPath);
+        return catelogPath.toArray(new Long[catelogPath.size()]);
+    }
+
+    private List<Long> getCatelogPath(Long catelogId, List<Long> ids) {
+        ids.add(catelogId);
+        CategoryEntity categoryEntity = this.baseMapper.selectById(catelogId);
+        if (categoryEntity.getParentCid() != 0) {
+            getCatelogPath(categoryEntity.getParentCid(), ids);
+        }
+        return ids;
     }
 
     private List<CategoryEntity> getChildren(CategoryEntity entity, List<CategoryEntity> all) {

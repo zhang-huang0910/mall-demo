@@ -1,15 +1,18 @@
 package com.mall.product.controller;
 
-import com.mall.common.utils.PageUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mall.common.utils.R;
+import com.mall.product.entity.BrandEntity;
 import com.mall.product.entity.CategoryBrandRelationEntity;
+import com.mall.product.entity.CategoryEntity;
+import com.mall.product.service.BrandService;
 import com.mall.product.service.CategoryBrandRelationService;
+import com.mall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
-
+import java.util.List;
 
 
 /**
@@ -25,15 +28,22 @@ public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+    @Autowired
+    private BrandService brandService;
+
+    @Autowired
+    private CategoryService categoryService;
+
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/catelog/list")
     //@RequiresPermissions("product:categorybrandrelation:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryBrandRelationService.queryPage(params);
+    public R list(@RequestParam("brandId") Long brandId) {
+        //PageUtils page = categoryBrandRelationService.queryPage(params);
+        List<CategoryBrandRelationEntity> categoryBrandRelationEntities = categoryBrandRelationService.list(new QueryWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId));
+        return R.ok().put("data", categoryBrandRelationEntities);
 
-        return R.ok().put("page", page);
     }
 
 
@@ -42,8 +52,8 @@ public class CategoryBrandRelationController {
      */
     @GetMapping("/info/{id}")
     //@RequiresPermissions("product:categorybrandrelation:info")
-    public R info(@PathVariable("id") Long id){
-		CategoryBrandRelationEntity categoryBrandRelation = categoryBrandRelationService.getById(id);
+    public R info(@PathVariable("id") Long id) {
+        CategoryBrandRelationEntity categoryBrandRelation = categoryBrandRelationService.getById(id);
 
         return R.ok().put("categoryBrandRelation", categoryBrandRelation);
     }
@@ -53,19 +63,22 @@ public class CategoryBrandRelationController {
      */
     @PostMapping("/save")
     //@RequiresPermissions("product:categorybrandrelation:save")
-    public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
-
+    public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation) {
+        BrandEntity brandEntity = brandService.getById(categoryBrandRelation.getBrandId());
+        CategoryEntity categoryEntity = categoryService.getById(categoryBrandRelation.getCatelogId());
+        categoryBrandRelation.setBrandName(brandEntity.getName());
+        categoryBrandRelation.setCatelogName(categoryEntity.getName());
+        categoryBrandRelationService.save(categoryBrandRelation);
         return R.ok();
     }
 
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     //@RequiresPermissions("product:categorybrandrelation:update")
-    public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.updateById(categoryBrandRelation);
+    public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation) {
+        categoryBrandRelationService.updateById(categoryBrandRelation);
 
         return R.ok();
     }
@@ -73,10 +86,10 @@ public class CategoryBrandRelationController {
     /**
      * 删除
      */
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     //@RequiresPermissions("product:categorybrandrelation:delete")
-    public R delete(@RequestBody Long[] ids){
-		categoryBrandRelationService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] ids) {
+        categoryBrandRelationService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

@@ -62,11 +62,11 @@ public class BrandController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     //@RequiresPermissions("product:brand:update")
     public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
-
+		//brandService.updateById(brand);
+        brandService.updateByIdAndName(brand);
         return R.ok();
     }
 
