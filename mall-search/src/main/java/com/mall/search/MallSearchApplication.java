@@ -1,0 +1,18 @@
+package com.mall.search;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+/**
+ * @auther zhz
+ * @Date 2020-11-10 12:27
+ */
+@EnableDiscoveryClient
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+public class MallSearchApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MallSearchApplication.class, args);
+    }
+}

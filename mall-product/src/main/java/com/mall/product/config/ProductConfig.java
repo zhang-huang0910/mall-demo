@@ -2,7 +2,6 @@ package com.mall.product.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.google.common.base.Predicates;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -24,7 +23,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 //@EnableSwagger2
 //@EnableKnife4j
 @Import(BeanValidatorPluginsConfiguration.class)
-@MapperScan("com.mall.product.dao")
 @EnableTransactionManagement
 public class ProductConfig {
 

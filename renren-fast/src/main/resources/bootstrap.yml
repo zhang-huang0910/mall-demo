@@ -5,4 +5,4 @@ spring:
         server-addr: ${nacos.conf_server_host}
         file-extension: yml
   application:
-    name: mall-product
+    name: renren-fast

@@ -72,7 +72,11 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     @Override
     public void deleteRelation(List<AttrGroupRelaionVo> relaionVos) {
         log.info("before deleteRelation: {}", relaionVos);
-        relationDao.deleteBatchRelationIds(relaionVos);
+        try {
+            relationDao.deleteBatchRelationIds(relaionVos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         log.info("after deleteRelation: {}", relaionVos);
 
     }

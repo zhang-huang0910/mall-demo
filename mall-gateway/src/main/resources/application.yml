@@ -2,18 +2,30 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: test_rout
-          uri: https://www.baidu.com
-          predicates:
-            - Query=url,baidu
-        - id: qq_rout
-          uri: https://www.qq.com
-          predicates:
-            - Query=url,qq
+        #        - id: test_rout
+        #          uri: https://www.baidu.com
+        #          predicates:
+        #            - Query=url,baidu
+        #        - id: qq_rout
+        #          uri: https://www.qq.com
+        #          predicates:
+        #            - Query=url,qq
         - id: product_rout
           uri: lb://mall-product
           predicates:
             - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: member_rout
+          uri: lb://mall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: ware_rout
+          uri: lb://mall-ware
+          predicates:
+            - Path=/api/ware/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
         - id: admin_route
