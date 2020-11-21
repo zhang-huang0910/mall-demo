@@ -2,18 +2,22 @@ package com.mall.product.controller;
 
 import com.mall.common.utils.PageUtils;
 import com.mall.common.utils.R;
+import com.mall.product.entity.AttrAttrgroupRelationEntity;
 import com.mall.product.entity.AttrEntity;
 import com.mall.product.entity.AttrGroupEntity;
 import com.mall.product.service.AttrAttrgroupRelationService;
 import com.mall.product.service.AttrGroupService;
 import com.mall.product.service.CategoryService;
 import com.mall.product.vo.AttrGroupRelaionVo;
+import com.mall.product.vo.AttrGroupWithAttrsVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -36,6 +40,12 @@ public class AttrGroupController {
     private AttrAttrgroupRelationService relationService;
 
     ///product/attrgroup/1/attr/relation [{attrId: 2, attrGroupId: 1}]
+    @GetMapping("/{catelogId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("catelogId") Long catelogId) {
+        List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return R.ok().put("data", vos);
+
+    }
 
     @GetMapping("/{attrGroupId}/attr/relation")
     public R getAttrById(@PathVariable("attrGroupId") Long attrGroupId) {
@@ -43,11 +53,36 @@ public class AttrGroupController {
         return R.ok().put("data", attrVos);
     }
 
+    //product/attrgroup/1/noattr/relation
+    @GetMapping("/{attrGroupId}/noattr/relation")
+    public R attrNoRelation(@PathVariable("attrGroupId") Long attrGroupId,
+                            @RequestParam Map<String, Object> params) {
+        PageUtils page = attrGroupService.getNoRelationAttr(params, attrGroupId);
+        return R.ok().put("page", page);
+    }
+
     // product/attrgroup/attr/relation/delete
     @PostMapping("/attr/relation/delete")
     public R batchDelete(@RequestBody List<AttrGroupRelaionVo> relaionVos) {
         //System.out.println(relaionVos);
         attrGroupService.deleteRelation(relaionVos);
+        return R.ok();
+    }
+
+    //批量保存
+    @PostMapping("/attr/relation")
+    public R batchSave(@RequestBody List<AttrGroupRelaionVo> relaionVos) {
+        //System.out.println(relaionVos);
+        if (relaionVos != null && relaionVos.size() > 0) {
+            List<AttrAttrgroupRelationEntity> relationEntities = relaionVos.stream()
+                    .map(e1 -> {
+                        AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
+                        BeanUtils.copyProperties(e1, relationEntity);
+                        return relationEntity;
+                    })
+                    .collect(Collectors.toList());
+            relationService.saveBatch(relationEntities);
+        }
         return R.ok();
     }
 

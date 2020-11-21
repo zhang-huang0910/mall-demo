@@ -5,6 +5,7 @@ import com.mall.common.utils.PageUtils;
 import com.mall.product.entity.AttrEntity;
 import com.mall.product.entity.AttrGroupEntity;
 import com.mall.product.vo.AttrGroupRelaionVo;
+import com.mall.product.vo.AttrGroupWithAttrsVo;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,9 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     List<AttrEntity>  getAttrById(Long attrGroupId);
 
     void deleteRelation(List<AttrGroupRelaionVo> relaionVos);
+
+    PageUtils getNoRelationAttr(Map<String, Object> params, Long attrGroupId);
+
+    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
 }
 

@@ -8,6 +8,7 @@ import com.mall.product.entity.CategoryEntity;
 import com.mall.product.service.BrandService;
 import com.mall.product.service.CategoryBrandRelationService;
 import com.mall.product.service.CategoryService;
+import com.mall.product.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,11 @@ public class CategoryBrandRelationController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/brands/list")
+    public R brandList(@RequestParam("catId") Long catelogId){
+        List<BrandVo> data = categoryBrandRelationService.getBrandsByCatId(catelogId);
+        return R.ok().put("data",data);
+    }
     /**
      * 列表
      */
