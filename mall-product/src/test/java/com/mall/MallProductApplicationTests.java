@@ -8,10 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MallProductApplication.class)
@@ -21,7 +24,11 @@ public class MallProductApplicationTests {
     private BrandService brandService;
 
     @Resource
-    private  CategoryService categoryService;
+    private CategoryService categoryService;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
     @Test
     public void contextLoads() {
         BrandEntity brandEntity = new BrandEntity();
@@ -32,9 +39,15 @@ public class MallProductApplicationTests {
     }
 
     @Test
-    public void getCategoryPath(){
+    public void getCategoryPath() {
         Long[] catelogPath = categoryService.findCatelogPath(255L);
         System.out.println(Arrays.toString(catelogPath));
+    }
+
+    @Test
+    public void testRedisTemplate() {
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.set("hello", UUID.randomUUID().toString());
     }
 
 }

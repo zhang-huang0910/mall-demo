@@ -22,7 +22,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("product/attrattrgrouprelation")
 public class AttrAttrgroupRelationController {
-
     @Autowired
     private AttrAttrgroupRelationService attrAttrgroupRelationService;
 

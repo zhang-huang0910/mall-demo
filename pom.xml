@@ -25,6 +25,8 @@
         <module>mall-common</module>
         <module>mall-gateway</module>
         <module>mall-search</module>
+        <module>mall-auth-server</module>
+        <module>mall-cart</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

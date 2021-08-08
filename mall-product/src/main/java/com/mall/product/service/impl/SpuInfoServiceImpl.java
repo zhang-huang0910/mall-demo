@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.Feign.coupon.CouponClient;
+import com.mall.common.Feign.to.SkuReductionTo;
+import com.mall.common.Feign.to.SpuBoundTo;
 import com.mall.common.utils.PageUtils;
 import com.mall.common.utils.Query;
 import com.mall.product.dao.SpuInfoDao;
@@ -136,10 +138,21 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                     skuSaleAttrValueService.saveBatch(collect1);
                 }
 
-                //5.4 sku的优惠。满减等信息；mall_sms->sms_sku_ladder sms_spu_bounds sms_sku_full_reduction
+                //5.4 mall_sms->sms_sku_ladder sms_spu_bounds sms_sku_full_reduction
+                SkuReductionTo skuReductionTo = new SkuReductionTo();
+                BeanUtils.copyProperties(e1,skuReductionTo);
+                skuReductionTo.setSkuId(skuId);
+                couponClient.saveSkuReductionTo(skuReductionTo);
             });
 
+
         }
+        //5 sku的优惠。满减等信息；
+        Bounds bounds = new Bounds();
+        SpuBoundTo spuBoundTo = new SpuBoundTo();
+        BeanUtils.copyProperties(bounds,spuBoundTo);
+        spuBoundTo.setSpuId(infoEntity.getId());
+        couponClient.saveSpuBounds(spuBoundTo);
 
     }
 

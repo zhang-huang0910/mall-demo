@@ -11,6 +11,13 @@ import org.springframework.context.annotation.Bean;
  * @auther zhz
  * @Date 2020-11-10 12:26
  */
+
+/**
+ * 1.导入依赖
+ * 2.编写配置
+ * 3.参见api
+ *
+ */
 @SpringBootConfiguration
 public class SearchConfig {
 

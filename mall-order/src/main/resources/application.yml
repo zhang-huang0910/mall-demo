@@ -6,10 +6,25 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: mall-order
+  jackson:
+    date-format: yyyy-MM-dd HH:ss:mm
+    time-zone: GMT-8
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+  rabbitmq:
+    host: 10.211.55.12
+    port: 5672
+    virtual-host: /
+    #发送端确认机制
+    publisher-confirms: true
+    template:
+      mandatory: true
+    #手动确认模式
+    listener:
+      direct:
+        acknowledge-mode: manual
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
