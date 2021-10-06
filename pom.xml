@@ -27,6 +27,8 @@
         <module>mall-search</module>
         <module>mall-auth-server</module>
         <module>mall-cart</module>
+        <module>rpc-demo-provider</module>
+        <module>rpc-demo-consumer</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
